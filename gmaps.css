@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+/**
+ * @license
+ * Copyright 2019 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/* Set the size of the div element that contains the map */
+#map {
+  height: 85%;
+    /* The height is 800 pixels */
+    width: 98%;
+    /* The width is the width of the web page */
+    border-radius: 16px;
+    margin-left: 1%;
+}
+
+html,
+body{
+  height: 100%;
+  background: #272727;
+  font-family: "Montserrat", sans-serif;
+  text-decoration: none;
+  font-size: 1.2em;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  text-transform: uppercase;
+  color: #fddb3a;
+  }
+  
+.arrow {
+    text-decoration: none;
+    position: fixed;
+    left: 20px;
+    top: 15px;
+    padding: 8px 18px;
+    color: black;
+    background-color: #fddb3a;
+    border-radius: 5px;
+  }
+  
+  .arrow:hover {
+    background-color: #a59025;
+    color: black;
+  }
