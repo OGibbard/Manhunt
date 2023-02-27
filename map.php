@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (isset($_SESSION['name'])==false){
+  header('Location: login.php');
+};
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,11 +14,12 @@
     <?php
     include_once("connection.php");
     array_map("htmlspecialchars", $_POST);
-    $stmt = $conn->prepare("SELECT * FROM Players");
+    $stmt = $conn->prepare("SELECT * FROM players");
     $stmt->execute();
     $test = $stmt->fetchAll();
     $people = json_encode($test);
     ?>
+    <script type="module" src="./location.js"></script>
     <script>
     var people = (<?php echo $people;?>);
     </script>

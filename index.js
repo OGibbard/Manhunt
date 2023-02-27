@@ -7,8 +7,7 @@ function initMap() {
       streetViewControl: false,
     });
     
-    for (let j=0; j < properties.length; j++) {
-      var temptype = properties[j].SiteType
+    for (let j=0; j < people.length; j++) {
       const marker = new google.maps.Marker({
         position: {lat: parseFloat(people[j].Latitude), lng: parseFloat(people[j].Longitude)},
         map: map,
