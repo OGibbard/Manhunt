@@ -14,16 +14,66 @@ if (isset($_SESSION['name'])==false){
     <?php
     include_once("connection.php");
     array_map("htmlspecialchars", $_POST);
-    $stmt = $conn->prepare("SELECT * FROM players");
+    $stmt = $conn->prepare("SELECT * FROM players WHERE Username!= :username");
+    $stmt->bindParam(':username', $_SESSION['name']);
     $stmt->execute();
     $test = $stmt->fetchAll();
     $people = json_encode($test);
     ?>
-    <script type="module" src="./location.js"></script>
+
     <script>
+    const successCallback = (position) => {
+        console.log(position);
+    var username = '<?php echo $_SESSION['name'];?>';
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    var accuracy = position.coords.accuracy;
+    var latest = position.timestamp;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('GET','uploadlocation.php?latitude='+latitude+'&longitude='+longitude+'&accuracy='+accuracy+'&latest='+latest+'&username='+username, true);
+    xmlhttp.send();
+    console.log(position);
+
     var people = (<?php echo $people;?>);
+    let map;
+    function initMap() {
+    // The map, centered at Thames and Kennet
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 6,
+      center: {lat: 54.3760767, lng: -2.5588948},
+      streetViewControl: false,
+    });
+    
+    for (let j=0; j < people.length; j++) {
+      const marker = new google.maps.Marker({
+        position: {lat: parseFloat(people[j].Latitude), lng: parseFloat(people[j].Longitude)},
+        label: people[j].Username,
+        map: map,
+      });
+      };
+    const marker = new google.maps.Marker({
+        position: {lat: latitude, lng: longitude},
+        label: 'Me',
+        map: map,
+    });
+    }
+
+    window.initMap = initMap;
+    };
+  
+    const errorCallback = (error) => {
+    console.log(error);
+    };
+
+    const options = {
+        enableHighAccuracy: true,
+    };
+
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options);
+    
     </script>
-    <script type="module" src="./index.js"></script>
+
+
   </head>
   <body>
 <!--The div element for the map -->
@@ -31,5 +81,6 @@ if (isset($_SESSION['name'])==false){
     <script async
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzpVcQynoGYjwPIJi4gAoIPvFBXI30J6w&callback=initMap&v=weekly"
     ></script>
+    <p><span id='data'></span></p>
   </body>
 </html>

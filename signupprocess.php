@@ -12,10 +12,10 @@ if ($result > 0) {
 else {
     $hashedPassword = hash('sha256', $_POST['passwd']);
     try{
-            $stmt = $conn->prepare("INSERT INTO players (Username,Password)VALUES (:username,:password)");
-        
+            $stmt = $conn->prepare("INSERT INTO players (Username,Password,Hunter,Latest,Latitude,Longitude)VALUES (:username,:password,'False','0','0','0')");
             $stmt->bindParam(':username', $_POST["username"]);
             $stmt->bindParam(':password', $hashedPassword);
+
             $stmt->execute();
         }
     catch(PDOException $e)

@@ -4,7 +4,7 @@ include_once ('connection.php');
 
 array_map('htmlspecialchars', $_POST);
 
-$stmt = $conn->prepare("SELECT * FROM players WHERE Username =:username ;" ); 
+$stmt = $conn->prepare("SELECT * FROM players WHERE Username =:username;" ); 
 
 $stmt->bindParam(':username', $_POST['username']); 
 
