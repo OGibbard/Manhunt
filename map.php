@@ -81,6 +81,16 @@ if (isset($_SESSION['name'])==false){
     <script async
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzpVcQynoGYjwPIJi4gAoIPvFBXI30J6w&callback=initMap&v=weekly"
     ></script>
-    <p><span id='data'></span></p>
+    <br><br>
+    <h4>Last coordinates</h4>
+    <?php
+		include_once("connection.php");
+		$stmt = $conn->prepare("SELECT * FROM players");
+		$stmt->execute();
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $timestamp = $row['Latest'];
+			echo ($row["Username"] . ': ' . $timestamp.'<br>');
+		}
+		?>
   </body>
 </html>
